@@ -23,9 +23,8 @@ import java.io.Serializable;
 @MappedSuperclass
 abstract public class BaseName extends BaseEntity implements Serializable {
 
-    private String name;
-    @JsonIgnore
-    private String description;
+    protected String name;
+    protected String description;
     public BaseName(String id) {
         super(id);
     }

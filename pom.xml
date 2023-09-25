@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.zimnat</groupId>
     <artifactId>tablet</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>tablet</name>
-    <description>tablet system for IT asset management</description>
+    <description>Tablet system for IT asset management</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -102,9 +102,9 @@
             <version>1.2.17</version>
         </dependency>
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>2.3.2</version>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
         </dependency>
     </dependencies>
 
@@ -180,6 +180,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>

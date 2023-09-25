@@ -4,8 +4,9 @@ package com.zimnat.tablet.business.security;
 import com.zimnat.tablet.aop.annotation.Auditor;
 import com.zimnat.tablet.business.domain.User;
 import com.zimnat.tablet.business.domain.dto.UserDTO;
-import com.zimnat.tablet.business.security.provider.UserDetailsServiceImpl;
 import com.zimnat.tablet.business.services.UserService;
+import com.zimnat.tablet.config.exceptions.AppNotAuthorizedException;
+import com.zimnat.tablet.config.exceptions.BadParametersException;
 import org.replica.emaze.exceptions.AccountLockedException;
 import org.replica.emaze.exceptions.InternalServerErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,19 @@ public class JwtAuthenticationController {
 
 
     @Auditor
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "signin", method = RequestMethod.POST)
     @ExceptionHandler(AccountLockedException.class)
     public ResponseEntity<?> LoginAndCreateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws BadCredentialsException, InternalServerErrorException {
         SimpleDateFormat format= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         User user=userService.findByUserName(authenticationRequest.getUsername());
-        System.err.println(authenticationRequest);
+        System.err.println(user);
+        if(user==null){
+            throw new BadParametersException("Username was not found!");
+        }
+        else if(!user.getActive()){
+            throw  new com.zimnat.tablet.config.exceptions.AccountLockedException("Your account has been locked after too many attempts!");
+        }
+
         if(user!=null){
             authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
             final UserDetails userDetails = userDetailsService
@@ -66,7 +74,7 @@ public class JwtAuthenticationController {
             UserDTO userDTO=new UserDTO(user, token);
             return ResponseEntity.ok(userDTO);
         }else{
-            throw new InternalServerErrorException("Login has failed! User not found.");
+            throw new BadParametersException("Login has failed! User not found.");
         }
 
     }
@@ -76,9 +84,9 @@ public class JwtAuthenticationController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             System.err.println("user "+ username+" has logged in!!");
         } catch (DisabledException e) {
-            throw new DisabledException("USER_DISABLED", e);
+            throw new com.zimnat.tablet.config.exceptions.AccountLockedException("user is not active, not allowed to login!");
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("INVALID_CREDENTIALS", e);
+            throw new AppNotAuthorizedException("Invalid username and/or password!");
         }
     }
 }

@@ -5,6 +5,8 @@ import Roles from "./screens/admin/roles";
 import Privileges from "./screens/admin/privileges";
 import AuditTrail from './screens/audit/audit.trail.jsx';
 import Home from "./screens/home.jsx";
+import Sbu from "./screens/sbu/sbu.jsx";
+
 
 function App() {
 
@@ -16,6 +18,7 @@ function App() {
 
                 <Routes>
                     <Route path="/home" element={<Navigate to={'/'} />} />
+                    <Route path="/sbu" element={<Sbu />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/roles" element={<Roles />} />
                     <Route path="/privileges" element={<Privileges />} />

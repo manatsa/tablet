@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.zimnat.tablet.business.security.provider;
+package com.zimnat.tablet.business.security;
 
 import com.zimnat.tablet.business.domain.Role;
 import com.zimnat.tablet.business.services.UserService;
+import com.zimnat.tablet.config.exceptions.AccountLockedException;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,18 +49,10 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 
     @SneakyThrows
     @Override
-    public UserDetails loadUserByUsername(String userName)
-            throws UsernameNotFoundException {
-
-        //logger.info("Loading user record for user name: {}", userName);
+    public UserDetails loadUserByUsername(String userName)throws UsernameNotFoundException {
         UserDetails userDetails = null;
-
         com.zimnat.tablet.business.domain.User user = userService.findByUserName(userName);
-        //logger.info("**********************************************Hello");
 
-        if(user!=null && !user.getActive()){
-            throw new AccountLockedException("User account is locked. Please get assistance from the administrator.");
-        }
         if (user != null) {
             String password = user.getPassword();
             Set<Role> roles = user.getRoles();

@@ -6,7 +6,6 @@ package com.zimnat.tablet.business.security;
  */
 
 
-import com.zimnat.tablet.business.security.provider.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

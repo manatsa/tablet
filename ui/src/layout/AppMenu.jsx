@@ -81,31 +81,6 @@ export default function AppMenu() {
             separator: true
         },
         {
-                label: 'My Subscriptions',
-                icon: 'pi pi-dollar',
-                command: () => {
-                    if(token && !isExpired){
-                        setSubVisible(true)
-                    }else{
-                        showToast(toast, 'error', 'Error 401: Access Denied','You need to log in to see profile details!')
-                    }
-                }
-            },
-        {
-                label: 'My Orders',
-                icon: 'pi pi-shopping-cart',
-                command: () => {
-                    if(token && !isExpired){
-                        setShowOrdersToMe(true)
-                    }else{
-                        showToast(toast, 'error', 'Error 401: Access Denied','You need to log in to see profile details!')
-                    }
-                }
-        },
-        {
-            separator: true
-        },
-        {
             label: 'Logout',
             icon: 'pi pi-fw pi-sign-out',
             command:()=>{
@@ -147,7 +122,7 @@ export default function AppMenu() {
                     command: ()=>{
                         if(token && !isExpired && login && login!=='undefined' && JSON.parse(login)?.roles?.includes('ADMIN')){
                             setOpen(false)
-                            navigate("/industry")
+                            navigate("/sbu")
                         }else{
                             showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
                             navigate("/")
@@ -291,19 +266,6 @@ export default function AppMenu() {
                         }
                     },
                     {
-                        label: 'Subscriptions',
-                        icon: 'pi pi-fw pi-shopping-cart',
-                        command: ()=>{
-                            if(token && !isExpired){
-                                setOpen(false)
-                                navigate("/subscriptions")
-                                setOpen(false);
-                            }else{
-                                showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
-                            }
-                        }
-                    },
-                    {
                         label: 'Settings',
                         icon: 'pi pi-fw pi-cog',
                         command: ()=>{
@@ -318,13 +280,6 @@ export default function AppMenu() {
                             }
                         }
                     },
-                    {
-                        separator: true
-                    },
-                    {
-                        label: 'Reports',
-                        icon: 'pi pi-database',
-                    }
                 ]
             },
 
@@ -333,92 +288,10 @@ export default function AppMenu() {
                 icon: 'pi pi-chart-bar',
                 // expanded: login && login!=='undefined' &&  JSON.parse(login || {})?.roles?.includes('ADMIN'),
                 items: [
-                    // all staff resport
-                    {
-                        label: 'Staff Reports',
-                        icon: 'pi pi-fw pi-users',
-                        items: [
-                            {
-                                label: 'All Staff Report ',
-                                icon: 'pi pi-fw pi-users',
-                                command: ()=>{
-                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
-                                        setOpen(false)
-                                        navigate("/users");
-                                        setOpen(false);
-                                    }else{
-                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
-                                    }
-                                }
-                            },
-                            // active staff report
-                            {
-                                label: 'Active Staff Report ',
-                                icon: 'pi pi-fw pi-users',
-                                command: ()=>{
-                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
-                                        setOpen(false)
-                                        navigate("/users");
-                                        setOpen(false);
-                                    }else{
-                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
-                                    }
-                                }
-                            },
-                            // other staff resport
-
-                        ]
-                    },
-                    {
-                        label: 'Asset Reports',
-                        icon: 'pi pi-fw pi-book',
-                        items: [
-                            {
-                                label: 'All Assets Report',
-                                icon: 'pi pi-book',
-                                command: ()=>{
-                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
-                                        setOpen(false)
-                                        navigate("/roles");
-                                        setOpen(false);
-                                    }else{
-                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
-                                    }
-                                }
-                            },
-                            {
-                                label: 'Active Assets Report',
-                                icon: 'pi pi-book',
-                                command: ()=>{
-                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
-                                        setOpen(false)
-                                        navigate("/roles");
-                                        setOpen(false);
-                                    }else{
-                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
-                                    }
-                                }
-                            },
-
-                        ]
-
-                    },
-                    {
-                        label: 'Allocations Reports',
-                        icon: 'pi pi-fw pi-wrench',
-                        command: ()=>{
-                            if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
-                                setOpen(false)
-                                navigate("/privileges");
-                                setOpen(false);
-                            }else{
-                                showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
-                            }
-                        }
-                    },
+                    // all SBU reports
                     {
                         label: 'SBU Reports',
-                        icon: 'pi pi-fw pi-shopping-cart',
+                        icon: 'pi pi-home',
                         items: [
                             {
                                 label:'SBUs Report',
@@ -462,6 +335,125 @@ export default function AppMenu() {
                         ]
 
                     },
+                    // all staff reports
+                    {
+                        label: 'Staff Reports',
+                        icon: 'pi pi-fw pi-users',
+                        items: [
+                            {
+                                label: 'All Staff Report ',
+                                icon: 'pi pi-fw pi-user',
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/users");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+                            // active staff report
+                            {
+                                label: 'Active Staff Report ',
+                                icon: 'pi pi-fw pi-user',
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/users");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+                            // other staff resport
+
+                        ]
+                    },
+                    // all assets reports
+                    {
+                        label: 'Asset Reports',
+                        icon: 'pi pi-fw pi-microsoft',
+                        items: [
+                            {
+                                label: 'All Assets Report',
+                                icon: 'pi pi-gift',
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/roles");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+                            {
+                                label: 'Active Assets Report',
+                                icon: 'pi pi-gift',
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/roles");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+
+                        ]
+
+                    },
+                    // all allocations reports
+                    {
+                        label: 'Allocations Reports',
+                        icon: 'pi pi-fw pi-id-card',
+                        items: [
+                            {
+                                label: 'Active Allocations Report',
+                                icon: "pi pi-link",
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/privileges");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+                            {
+                                label: 'Obsolete Allocations Report',
+                                icon: "pi pi-link",
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/privileges");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+                            {
+                                label: 'Reversed Allocations Report',
+                                icon: "pi pi-link",
+                                command: ()=>{
+                                    if(token && login && login!=='undefined' && !isExpired && JSON.parse(login)?.roles?.includes('ADMIN')){
+                                        setOpen(false)
+                                        navigate("/privileges");
+                                        setOpen(false);
+                                    }else{
+                                        showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
+                                    }
+                                }
+                            },
+                        ]
+
+                    },
+                    // all other reports
                     {
                         label: 'Other Reports',
                         icon: 'pi pi-fw pi-cog',
@@ -477,13 +469,7 @@ export default function AppMenu() {
                             }
                         }
                     },
-                    {
-                        separator: true
-                    },
-                    {
-                        label: 'Reports',
-                        icon: 'pi pi-database',
-                    }
+
                 ]
             }
 
@@ -504,7 +490,8 @@ export default function AppMenu() {
             <AppBar component="nav" style={{backgroundColor:PrimaryColor}}>
                 <Toolbar>
                     <div className={' flex flex-row align-items-center'}>
-                        {login && JSON.parse(login)?.privileges?.includes('ADMIN') && token && <IconButton
+                        {//login && JSON.parse(login)?.privileges?.includes('ADMIN') && token &&
+                             <IconButton
                             size="medium"
                             edge="start"
                             style={{color:'white'}}
@@ -557,7 +544,7 @@ export default function AppMenu() {
                             <UserMenu userMenu={userMenu} login={login} changeColor={false} />
                         </div>
                         <div className="card flex justify-content-center ">
-                            <PanelMenu multiple={false} model={items} className="w-full md:w-25rem" style={{color: PrimaryColor}} onClick={()=>{
+                            <PanelMenu multiple={false} color={PrimaryColor} model={items} className="w-full md:w-25rem" style={{color: PrimaryColor}} onClick={()=>{
                                 if(!token && isExpired){
                                     showToast(toast,"error", "Error 401: Access Denied","You are not authorized to access this resource, please login with privileged account.");
                                     navigate("/")
@@ -569,13 +556,6 @@ export default function AppMenu() {
 
             </div>
 
-            <Dialog header={()=><div
-                style={{width:'90%', backgroundColor:PrimaryColor, padding: '20px', borderRadius:20, color:'white', margin: 10}}
-            >
-                ORDERS TO ME</div>} visible={showOrdersToMe} onHide={() => setShowOrdersToMe(false)}
-                    style={{ width: '90vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }} className={'sx:w-11 md:w-5'}>
-                <MyOrders />
-            </Dialog>
         </Box>
     );
 }

@@ -22,7 +22,7 @@ const AppStage= (props) => {
             },
             mutations: {
                 retry:0,
-            }
+            },
         },
         queryCache: new QueryCache({
             onError: (error) => {

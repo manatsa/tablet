@@ -25,7 +25,6 @@ abstract public class BaseEntity implements Serializable {
     @Id
     private String id;
 
-//    @JsonIgnore
     @CreatedBy
     @JoinColumn(name="created_by")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -34,7 +33,7 @@ abstract public class BaseEntity implements Serializable {
     @JsonIgnore
     @LastModifiedBy
     @JoinColumn(name="modified_by")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User modifiedBy;
 
     @CreatedDate

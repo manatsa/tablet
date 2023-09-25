@@ -29,9 +29,6 @@ const UserMenu =({login, userMenu, changeColor, cart}) => {
             <div className="flex flex-grow-1 col-4   flex flex-row justify-content-end">
                 { !logins &&
                     <div className={'sm:flex-column row-gap-8 sm:row-gap-1'}>
-                        <Button className={'px-2'} label={'Register'} text={true} style={{color: 'white'}} onClick={() => {
-                            setOpenRegisterDialog(true)
-                        }}/>
                         <Button className={'px-2'} label={'Sign In'} text={true} style={{color: 'white'}} onClick={() => {
                             setOpenLoginDialog(true)
                         }}/>

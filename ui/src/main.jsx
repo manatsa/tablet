@@ -10,6 +10,7 @@ import '/node_modules/primeflex/primeflex.css';
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import AppStage from "./AppStage";
+import './App.css'
 
 
 ReactDOM.createRoot(document.getElementById('root') ).render(

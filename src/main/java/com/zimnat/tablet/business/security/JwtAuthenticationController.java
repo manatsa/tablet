@@ -15,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +33,7 @@ import java.util.Date;
 
 @RestController
 //@CrossOrigin(origins = "*")
-@RequestMapping("api/")
+@RequestMapping("api/auth")
 public class JwtAuthenticationController {
 
     @Autowired
@@ -56,7 +58,7 @@ public class JwtAuthenticationController {
     public ResponseEntity<?> LoginAndCreateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws BadCredentialsException, InternalServerErrorException {
         SimpleDateFormat format= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         User user=userService.findByUserName(authenticationRequest.getUsername());
-        System.err.println(user);
+        System.err.println(passwordEncoder.encode("Manat5achin5"));
         if(user==null){
             throw new BadParametersException("Username was not found!");
         }
@@ -81,7 +83,9 @@ public class JwtAuthenticationController {
 
     private void authenticate(String username, String password) throws BadCredentialsException {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            Authentication authentication=new UsernamePasswordAuthenticationToken(username, password);
+            authenticationManager.authenticate(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             System.err.println("user "+ username+" has logged in!!");
         } catch (DisabledException e) {
             throw new com.zimnat.tablet.config.exceptions.AccountLockedException("user is not active, not allowed to login!");

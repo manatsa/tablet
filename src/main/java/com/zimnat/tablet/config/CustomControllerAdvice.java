@@ -121,7 +121,7 @@ public class CustomControllerAdvice {
     @ExceptionHandler({AppNotAuthorizedException.class})
     @ResponseStatus(
             value = HttpStatus.UNAUTHORIZED,
-            reason = "Account has been locked or user is not in the system.",
+            reason = "Not Authorised!!",
             code=HttpStatus.UNAUTHORIZED)
     public ResponseEntity<ErrorResponse> handleUnauthorizedExceptions(Exception e)
     {

@@ -23,32 +23,22 @@ public class ProjectConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(8);
-//        return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
+   /* @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         String hierarchy = "ROLE_SUPER > ROLE_ADMIN > ROLE_USER";
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
-    }
+    }*/
 
-    @Bean
+   /* @Bean
     public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
         DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
         expressionHandler.setRoleHierarchy(roleHierarchy());
         return expressionHandler;
-    }
-
-    @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
-        InMemoryUserDetailsManager inMemoryUserDetailsManager= new InMemoryUserDetailsManager();
-        UserDetails user= User.withDefaultPasswordEncoder().username("user").password("user").roles("USER").build();
-        UserDetails admin= User.withDefaultPasswordEncoder().username("admin").password("admin").roles("ADMIN").build();
-
-        return inMemoryUserDetailsManager;
-    }
+    }*/
 
 
 
